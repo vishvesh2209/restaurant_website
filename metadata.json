@@ -1,0 +1,6 @@
+{
+  "name": "Texas Taste",
+  "description": "Luxury 100% premium vegetarian fine dining restaurant in downtown Austin, Texas featuring organic farm-to-table gourmet dishes, wood-fired paneer sizzlers, artisanal pasta, wood-fired pizzas, and handcrafted mocktails.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
