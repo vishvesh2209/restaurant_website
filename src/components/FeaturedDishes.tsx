@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ShoppingCart, Flame, Award, TrendingUp, Sparkles, UtensilsCrossed } from 'lucide-react';
 import { MenuItem } from '../types';
-import { MENU_ITEMS } from '../data';
+import { MENU_ITEMS, formatINR } from '../data';
 
 interface FeaturedDishesProps {
   onAddToCart: (item: MenuItem) => void;
@@ -103,7 +103,7 @@ export default function FeaturedDishes({ onAddToCart, onViewFullMenu }: Featured
                         {dish.name}
                       </h3>
                       <span className="font-serif text-xl sm:text-2xl font-bold text-[#B22222] shrink-0">
-                        ${dish.price.toFixed(2)}
+                        {formatINR(dish.price)}
                       </span>
                     </div>
 

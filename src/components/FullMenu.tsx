@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, ShoppingCart, SlidersHorizontal, Check, RefreshCw, Star, Info, Flame } from 'lucide-react';
 import { MenuItem } from '../types';
-import { MENU_ITEMS } from '../data';
+import { MENU_ITEMS, formatINR } from '../data';
 
 interface FullMenuProps {
   onAddToCart: (item: MenuItem) => void;
@@ -13,7 +13,7 @@ type CategoryType = 'all' | 'starters' | 'pizzas' | 'pastas' | 'burgers' | 'main
 export default function FullMenu({ onAddToCart }: FullMenuProps) {
   const [activeCategory, setActiveCategory] = useState<CategoryType>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [maxPrice, setMaxPrice] = useState<number>(55);
+  const [maxPrice, setMaxPrice] = useState<number>(750);
   const [dietaryFilter, setDietaryFilter] = useState<{
     spicy: boolean;
     gf: boolean;
@@ -76,7 +76,7 @@ export default function FullMenu({ onAddToCart }: FullMenuProps) {
   const resetFilters = () => {
     setActiveCategory('all');
     setSearchQuery('');
-    setMaxPrice(55);
+    setMaxPrice(750);
     setDietaryFilter({ spicy: false, gf: false, chef: false });
   };
 
@@ -134,7 +134,7 @@ export default function FullMenu({ onAddToCart }: FullMenuProps) {
                 Refine Menu
               </button>
 
-              {(searchQuery || maxPrice < 55 || dietaryFilter.spicy || dietaryFilter.gf || dietaryFilter.chef) && (
+              {(searchQuery || maxPrice < 750 || dietaryFilter.spicy || dietaryFilter.gf || dietaryFilter.chef) && (
                 <button
                   id="menu-filter-reset"
                   onClick={resetFilters}
@@ -166,23 +166,23 @@ export default function FullMenu({ onAddToCart }: FullMenuProps) {
                         Maximum Price Limit
                       </span>
                       <span className="text-sm font-serif font-bold text-[#B22222]">
-                        ${maxPrice.toFixed(2)}
+                        {formatINR(maxPrice)}
                       </span>
                     </div>
                     <input
                       id="menu-price-range"
                       type="range"
-                      min="4"
-                      max="55"
-                      step="1"
+                      min="150"
+                      max="750"
+                      step="25"
                       value={maxPrice}
                       onChange={(e) => setMaxPrice(Number(e.target.value))}
                       className="w-full accent-[#B22222] cursor-pointer h-1.5 bg-[#121212] rounded-lg"
                     />
                     <div className="flex justify-between text-[10px] text-[#8E8E8E] font-sans mt-2">
-                      <span>$4.00</span>
-                      <span>$30.00</span>
-                      <span>$55.00+</span>
+                      <span>₹150</span>
+                      <span>₹450</span>
+                      <span>₹750</span>
                     </div>
                   </div>
 
@@ -333,7 +333,7 @@ export default function FullMenu({ onAddToCart }: FullMenuProps) {
                           {item.name}
                         </h4>
                         <span className="font-serif text-lg sm:text-xl font-bold text-[#B22222] shrink-0">
-                          ${item.price.toFixed(2)}
+                          {formatINR(item.price)}
                         </span>
                       </div>
                       <p className="font-sans text-[#C8C8C8] text-sm font-normal leading-relaxed mb-4 line-clamp-2">

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Trash2, ShoppingBag, Plus, Minus, CreditCard, Check, Flame } from 'lucide-react';
 import { CartItem } from '../types';
+import { formatINR } from '../data';
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -26,9 +27,9 @@ export default function CartSidebar({
   const [cookingEta, setCookingEta] = useState(25);
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.menuItem.price * item.quantity, 0);
-  const taxRate = 0.0825;
+  const taxRate = 0.05;
   const tax = subtotal * taxRate;
-  const deliveryFee = orderType === 'delivery' ? 4.99 : 0;
+  const deliveryFee = orderType === 'delivery' ? 50 : 0;
   const total = subtotal + tax + deliveryFee;
 
   const handleCheckout = (e: React.FormEvent) => {
@@ -186,7 +187,7 @@ export default function CartSidebar({
                             {item.menuItem.name}
                           </h4>
                           <span className="text-[#B22222] text-sm font-bold font-serif">
-                            ${(item.menuItem.price * item.quantity).toFixed(2)}
+                            {formatINR(item.menuItem.price * item.quantity)}
                           </span>
                         </div>
 
@@ -270,21 +271,21 @@ export default function CartSidebar({
                 <div className="space-y-2 text-xs sm:text-sm font-sans text-[#B7B7B7] text-left">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span className="text-white">${subtotal.toFixed(2)}</span>
+                    <span className="text-white">{formatINR(subtotal)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Texas Sales Tax (8.25%)</span>
-                    <span className="text-white">${tax.toFixed(2)}</span>
+                    <span>GST (5%)</span>
+                    <span className="text-white">{formatINR(tax)}</span>
                   </div>
                   {orderType === 'delivery' && (
                     <div className="flex justify-between">
                       <span>Delivery Fee</span>
-                      <span className="text-white">${deliveryFee.toFixed(2)}</span>
+                      <span className="text-white">{formatINR(deliveryFee)}</span>
                     </div>
                   )}
                   <div className="flex justify-between border-t border-white/[0.08] pt-2 text-base font-serif font-bold text-[#B22222]">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>{formatINR(total)}</span>
                   </div>
                 </div>
 
@@ -295,7 +296,7 @@ export default function CartSidebar({
                     className="w-full py-4.5 rounded-[18px] bg-[#B22222] hover:bg-[#D32F2F] text-white font-sans text-sm uppercase tracking-widest font-bold cursor-pointer transition-all duration-300 flex items-center justify-center gap-2.5 shadow-2xl shadow-[#B22222]/40 hover:scale-[1.02] active:scale-[0.98] border border-[#FF6B6B]/30"
                   >
                     <CreditCard className="w-5 h-5" />
-                    Place Order &bull; ${total.toFixed(2)}
+                    Place Order &bull; {formatINR(total)}
                   </button>
                 </form>
               </div>
